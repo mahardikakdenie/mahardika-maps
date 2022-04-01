@@ -14,10 +14,12 @@
           @edit="openDialogUpdate"
           @input="inserData"
           @show="showMap"
+          @destroy="openDialogDelete"
         ></app-tabs>
       </v-container>
     </v-main>
     <app-update :dialog="dialogUpdate" @input="updateData"></app-update>
+    <app-delete :dialog="dialogDelete" @delete="deleteData"></app-delete>
   </v-app>
 </template>
 
@@ -27,6 +29,7 @@ import card from "./components/Card.vue";
 import tabs from "./components/Tabs.vue";
 import maps from "./components/map/_map.vue";
 import dialogUpdate from "./components/dialog/DialogInput.vue";
+import openDialogDelete from "./components/dialog/DialogNotice.vue";
 
 export default {
   name: "App",
@@ -36,10 +39,15 @@ export default {
     "app-maps": maps,
     "app-card": card,
     "app-update": dialogUpdate,
+    "app-delete": openDialogDelete,
   },
 
   data: () => ({
     dialogUpdate: {
+      open: false,
+      data: {},
+    },
+    dialogDelete: {
       open: false,
       data: {},
     },
@@ -110,7 +118,9 @@ export default {
         })
         .then((res) => {
           if (res.data.meta.status) {
-            alert("Data has been deleted");
+            alert("Data has been deleted with title " + item.title);
+            this.dialogDelete.open = false;
+            this.getShow();
           }
         });
     },
@@ -121,6 +131,10 @@ export default {
     openDialogUpdate(item) {
       this.dialogUpdate.open = true;
       this.dialogUpdate.data = item;
+    },
+    openDialogDelete(item) {
+      this.dialogDelete.open = true;
+      this.dialogDelete.data = item;
     },
   },
 };

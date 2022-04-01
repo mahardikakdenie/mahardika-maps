@@ -4,27 +4,46 @@
       <h2 class="success--text">List Map</h2>
     </template>
     <v-container>
-      <v-data-table :items="data" :headers="headers">
-        <template #[`item.action`]="{ item }">
-          <v-row>
-            <v-col cols="12" md="4">
-              <v-btn icon color="info" small @click="edit(item)">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col @click="destroy(item)" cols="12" md="4">
-              <v-btn icon small color="error">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-btn @click="show(item)" icon small color="success">
-                <v-icon>mdi-eye</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-table>
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="search"
+            class=""
+            append-icon="mdi-magnify"
+            :label="`Search`"
+            :placeholder="`Search`"
+          />
+        </v-col>
+        <v-col cols="12">
+          <v-data-table :search="search" :items="data" :headers="headers">
+            <template #[`item.address`]="{ item }">
+              {{ item.address ? item.address : "-" }}
+            </template>
+            <template #[`item.ordinat`]="{ item }">
+              {{ item.ordinat ? item.ordinat : "-" }}
+            </template>
+            <template #[`item.action`]="{ item }">
+              <v-row>
+                <v-col cols="12" md="4">
+                  <v-btn icon color="info" small @click="edit(item)">
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col @click="destroy(item)" cols="12" md="4">
+                  <v-btn icon small color="error">
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" md="4">
+                  <v-btn @click="show(item)" icon small color="success">
+                    <v-icon>mdi-eye</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
     </v-container>
   </app-card>
 </template>
@@ -42,6 +61,7 @@ export default {
     "app-card": card,
   },
   data: () => ({
+    search: "",
     headers: [
       {
         text: "#",

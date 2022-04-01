@@ -22,6 +22,7 @@
           :data="data"
           @edit="editData"
           @show="showData"
+          @destroy="destroyData"
           class="mt-12"
         />
       </v-tab-item>
