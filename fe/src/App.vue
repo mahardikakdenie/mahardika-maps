@@ -47,7 +47,6 @@ export default {
       },
       set(value) {
         this.tab = value;
-        console.log(value);
       },
     },
   },
