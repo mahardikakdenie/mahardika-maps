@@ -82,7 +82,7 @@ export default {
   methods: {
     submit() {
       this.$refs.observer.validate();
-      this.$emit("add", this.form);
+      this.$emit("add", { item: this.form, is_address: this.is_address });
       this.$refs.observer.reset();
     },
     showKoordinar() {

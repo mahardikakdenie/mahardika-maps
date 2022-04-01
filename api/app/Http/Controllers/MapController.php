@@ -48,12 +48,13 @@ class MapController extends Controller
         try {
             $map = new Map();
             $map->title = $request->title;
-            $map->address = $request->address;
-            if ($request->ordinat != null || $request->ordinat != "") {
-                $map->ordinat = $request->ordinat;
+            $map->is_address = $request->is_address;
+            $map->ordinat = $request->ordinat;
+            if ($request->is_address == false) {
                 $url = "https://maps.google.com/maps?q=" . $request->ordinat . "&t=&z=13&ie=UTF8&iwloc=&output=embed";
             }
-            if ($request->address != null || $request->address != "") {
+            if ($request->is_address == true) {
+                $map->address = $request->address;
                 $address = str_replace(" ", "%20%", $request->address);
                 $url = "https://maps.google.com/maps?q=" . $address . "&t=&z=13&ie=UTF8&iwloc=&output=embed";
             }
@@ -115,13 +116,14 @@ class MapController extends Controller
         try {
             $map = Map::findOrFail($id);
             $map->title = $request->input('title', $map->title);
+            $map->is_address = $request->is_address;
 
-            if ($request->ordinat != null || $request->ordinat != "") {
+            if ($map->is_address == false) {
                 $map->ordinat = $request->input("ordinat", $map->ordinat);
                 $url = "https://maps.google.com/maps?q=" . $request->ordinat . "&t=&z=13&ie=UTF8&iwloc=&output=embed";
                 $map->address = null;
             }
-            if ($request->address != null || $request->address != "") {
+            if ($map->is_address == true) {
                 $map->address = $request->input("address", $map->address);
                 $address = str_replace(" ", "%20%", $request->input("address", $map->address));
                 $url = "https://maps.google.com/maps?q=" . $address . "&t=&z=13&ie=UTF8&iwloc=&output=embed";

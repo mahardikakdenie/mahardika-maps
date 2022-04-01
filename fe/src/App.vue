@@ -74,7 +74,7 @@ export default {
         id: id,
       });
     },
-    inserData(item) {
+    inserData({ item, is_address }) {
       this.$store
         .dispatch("map/inserData", {
           title: item.title,
@@ -82,19 +82,19 @@ export default {
           description: item.description,
           mark_as: item.mark_as,
           ordinat: item.ordinat,
+          is_address: is_address,
         })
         .then((res) => {
           if (res.data.meta.status) {
-            item = null;
+            console.log(item.ordinat);
             alert("Data has been saved");
             localStorage.setItem("id", res.data.data.id);
-            // this.tab = "tab-2";
-            localStorage.setItem("tabs", "tab-2");
+            // this.tab = "tab-2"
             this.showData(res.data.data.id);
           }
         });
     },
-    updateData(item) {
+    updateData({ item }) {
       this.$store
         .dispatch("map/updateData", {
           id: item.id,
@@ -103,11 +103,13 @@ export default {
           description: item.description,
           mark_as: item.mark_as,
           ordinat: item.ordinat,
+          is_address: item.is_address,
         })
         .then((res) => {
           if (res.data.meta.status) {
             alert("Data has been updated");
             this.dialogUpdate.open = false;
+            this.getData();
           }
         });
     },

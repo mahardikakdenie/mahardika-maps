@@ -32,18 +32,16 @@
                   placeholder="Title"
                 ></v-text-field>
                 <div class="mb-2 d-flex justify-end">
-                  <v-btn @click="showKoordinar" color="success">
+                  <v-btn @click="showKoordinar(dialog.data)" color="success">
                     Use
                     {{
-                      is_address || dialog.data.address
-                        ? "Koordinat"
-                        : "Address"
+                      dialog.data.is_address ? "Koordinat" : "Address"
                     }}</v-btn
                   >
                 </div>
                 <v-text-field
                   v-model="dialog.data.address"
-                  v-if="is_address && dialog.data.address"
+                  v-if="dialog.data.is_address"
                   :rules="[validateNotNull]"
                   outlined
                   placeholder="Address"
@@ -53,7 +51,7 @@
                 </v-text-field>
                 <v-text-field
                   v-model="dialog.data.ordinat"
-                  v-if="!is_address || !dialog.data.address"
+                  v-if="!dialog.data.is_address"
                   :rules="[validateNotNull]"
                   outlined
                   placeholder="Koordinat"
@@ -106,11 +104,14 @@ export default {
     validateNotNull: (v) => v !== null && v !== "",
   }),
   methods: {
-    showKoordinar() {
-      this.is_address = !this.is_address;
+    showKoordinar(item) {
+      item.is_address = !item.is_address;
     },
     submit() {
-      this.$emit("input", this.dialog.data);
+      this.$emit("input", {
+        item: this.dialog.data,
+        is_address: this.is_address,
+      });
     },
   },
 };
