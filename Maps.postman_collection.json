@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "4b4f742f-6a31-429c-ba4a-c35f01de55aa",
+		"name": "Maps",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/map",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"map"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "show",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/map/first?id=2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"map",
+						"first"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "store",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Gate way cicadas",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Jalan Antasari",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "{{$randomLoremLines}}",
+							"type": "text"
+						},
+						{
+							"key": "mark_as",
+							"value": "home",
+							"type": "text"
+						},
+						{
+							"key": "ordinat",
+							"value": "-6.9060478360741415, 107.64601862028974",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "is_address",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url_production}}/api/map",
+					"host": [
+						"{{url_production}}"
+					],
+					"path": [
+						"api",
+						"map"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Test",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Jalan Antasari iii no 23",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "{{$randomLoremLines}}",
+							"type": "text"
+						},
+						{
+							"key": "mark_as",
+							"value": "home",
+							"type": "text"
+						},
+						{
+							"key": "is_address",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "ordinat",
+							"value": "-6.906043157495419, 107.64822705560191",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url_production}}/api/map/3",
+					"host": [
+						"{{url_production}}"
+					],
+					"path": [
+						"api",
+						"map",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "destroy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Test",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Jalan Antasari iii no 23",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "{{$randomLoremLines}}",
+							"type": "text"
+						},
+						{
+							"key": "mark_as",
+							"value": "home",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/map/9",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"map",
+						"9"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
