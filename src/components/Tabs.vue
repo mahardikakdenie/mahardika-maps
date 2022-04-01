@@ -63,6 +63,7 @@ export default {
   methods: {
     addData(item) {
       this.$emit("input", item);
+      console.log(item);
     },
   },
 };
