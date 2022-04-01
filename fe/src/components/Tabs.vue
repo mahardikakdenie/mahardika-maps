@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-tabs color="success" v-model="overwriteTab" centered icons-and-text>
+    <v-tabs color="success" v-model="tab" centered icons-and-text>
       <v-tabs-slider></v-tabs-slider>
       <v-tab href="#tab-1">
         Input
@@ -13,12 +13,17 @@
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="overwriteTab">
+    <v-tabs-items v-model="tab">
       <v-tab-item :value="'tab-1'">
         <app-input @add="addData" />
       </v-tab-item>
       <v-tab-item :value="'tab-2'">
-        <app-list :data="data" class="mt-12" />
+        <app-list
+          :data="data"
+          @edit="editData"
+          @show="showData"
+          class="mt-12"
+        />
       </v-tab-item>
     </v-tabs-items>
   </v-container>
@@ -37,33 +42,28 @@ export default {
       type: Array,
       default: null,
     },
-    tab: {
-      type: String,
-      default: "tab-1",
-    },
   },
 
   data: () => ({
-    // tab: null,
+    tab: null || localStorage.getItem("tabs"),
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   }),
   watch: {
     // tab() {},
   },
-  computed: {
-    overwriteTab: {
-      get() {
-        return this.tab;
-      },
-      set(value) {
-        this.tab = value;
-      },
-    },
-  },
+  computed: {},
   methods: {
     addData(item) {
       this.$emit("input", item);
-      console.log(item);
+    },
+    editData(item) {
+      this.$emit("edit", item);
+    },
+    destroyData(item) {
+      this.$emit("destroy", item);
+    },
+    showData(item) {
+      this.$emit("show", item);
     },
   },
 };

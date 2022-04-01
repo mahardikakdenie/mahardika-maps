@@ -2,16 +2,22 @@
   <v-app>
     <v-main class="mt-12">
       <v-container>
-        <app-card color="success" title="Satellite Map" class="px-5 py-3">
+        <app-card
+          color="success"
+          :title="`Satellite Map - ${computedShow.title}`"
+          class="px-5 py-3"
+        >
           <app-maps :data="computedShow"></app-maps>
         </app-card>
         <app-tabs
-          :tab="overwriteTab"
           :data="computedData"
+          @edit="openDialogUpdate"
           @input="inserData"
+          @show="showMap"
         ></app-tabs>
       </v-container>
     </v-main>
+    <app-update :dialog="dialogUpdate" @input="updateData"></app-update>
   </v-app>
 </template>
 
@@ -20,6 +26,7 @@
 import card from "./components/Card.vue";
 import tabs from "./components/Tabs.vue";
 import maps from "./components/map/_map.vue";
+import dialogUpdate from "./components/dialog/DialogInput.vue";
 
 export default {
   name: "App",
@@ -28,10 +35,14 @@ export default {
     "app-tabs": tabs,
     "app-maps": maps,
     "app-card": card,
+    "app-update": dialogUpdate,
   },
 
   data: () => ({
-    tab: "tab-1",
+    dialogUpdate: {
+      open: false,
+      data: {},
+    },
   }),
 
   computed: {
@@ -40,14 +51,6 @@ export default {
     },
     computedShow() {
       return this.$store.state.map.show;
-    },
-    overwriteTab: {
-      get() {
-        return this.tab;
-      },
-      set(value) {
-        this.tab = value;
-      },
     },
   },
   mounted() {
@@ -74,12 +77,50 @@ export default {
         })
         .then((res) => {
           if (res.data.meta.status) {
+            item = null;
             alert("Data has been saved");
             localStorage.setItem("id", res.data.data.id);
-            this.tab = "tab-2";
+            // this.tab = "tab-2";
+            localStorage.setItem("tabs", "tab-2");
             this.showData(res.data.data.id);
           }
         });
+    },
+    updateData(item) {
+      this.$store
+        .dispatch("map/updateData", {
+          id: item.id,
+          title: item.title,
+          address: item.address,
+          description: item.description,
+          mark_as: item.mark_as,
+          ordinat: item.ordinat,
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            alert("Data has been updated");
+            this.dialogUpdate.open = false;
+          }
+        });
+    },
+    deleteData(item) {
+      this.$store
+        .dispatch("map/deleteData", {
+          id: item.id,
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            alert("Data has been deleted");
+          }
+        });
+    },
+    showMap(item) {
+      this.showData(item.id);
+      alert(`show map with title ${item.title}`);
+    },
+    openDialogUpdate(item) {
+      this.dialogUpdate.open = true;
+      this.dialogUpdate.data = item;
     },
   },
 };

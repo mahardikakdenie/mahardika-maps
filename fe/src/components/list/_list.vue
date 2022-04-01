@@ -12,13 +12,13 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col @click="destroy(item)" cols="12" md="4">
               <v-btn icon small color="error">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-col>
             <v-col cols="12" md="4">
-              <v-btn icon small color="success">
+              <v-btn @click="show(item)" icon small color="success">
                 <v-icon>mdi-eye</v-icon>
               </v-btn>
             </v-col>
@@ -56,6 +56,10 @@ export default {
         value: "address",
       },
       {
+        text: "Ordinat",
+        value: "ordinat",
+      },
+      {
         text: "Descripton",
         value: "description",
       },
@@ -69,6 +73,17 @@ export default {
       },
     ],
   }),
+  methods: {
+    edit(item) {
+      this.$emit("edit", item);
+    },
+    destroy(item) {
+      this.$emit("destroy", item);
+    },
+    show(item) {
+      this.$emit("show", item);
+    },
+  },
 };
 </script>
 

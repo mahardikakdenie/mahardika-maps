@@ -83,6 +83,7 @@ export default {
     submit() {
       this.$refs.observer.validate();
       this.$emit("add", this.form);
+      this.$refs.observer.reset();
     },
     showKoordinar() {
       this.is_address = !this.is_address;
